@@ -16,19 +16,6 @@ def request_page(url):
     return page
 
 
-def extract_results(result_list):
-    output = []
-    for res in result_list:
-        link = res.select('li a')
-        desc = res.find_all('p', {'data-testid': 'address'})[0].get_text()
-        price = res.find_all('div', {'data-testid': 'price'})[0].get_text()
-        info_tags = res.find_all('div', {'data-testid': 'card-info'})
-        infos = [p.get_text() for p in info_tags]
-        place = {'link': 'https://www.daft.ie' + link[0]['href'], 'desc': desc, 'price': price, 'infos': infos}
-        output.append(place)
-    return output
-
-
 @app.get("/")
 def status():
     return [{"daft": "call /daft for daft places"},
